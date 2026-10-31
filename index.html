@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Customer churn predictor</title>
+
+  <!-- Fonts: Big Shoulders Display (headings, numbers) + Hanken Grotesk (interface) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ============ Left: result panel ============ -->
+    <aside class="panel" id="panel">
+      <div class="panel-inner">
+
+        <div class="status" id="status" data-state="checking" role="status">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="status-text">Checking API</span>
+        </div>
+
+        <header class="intro">
+          <h1>Will this customer stay?</h1>
+          <p>Enter the customer's plan and billing details. The model estimates the chance they cancel.</p>
+        </header>
+
+        <section class="result" id="result" aria-labelledby="result-heading">
+          <h2 class="sr-only" id="result-heading">Prediction result</h2>
+
+          <div class="meter" id="meter" data-state="intro" data-tier="none">
+            <div class="bars" id="bars" aria-hidden="true"></div>
+            <p class="readout" id="readout">
+              <span id="pct-number">–</span><span class="sign">%</span>
+            </p>
+          </div>
+
+          <div class="verdict" aria-live="polite">
+            <p class="verdict-title" id="verdict-title">No prediction yet</p>
+            <p class="verdict-sub" id="verdict-sub">Fill in the form, then select Predict churn.</p>
+            <span class="badge" id="risk-badge" hidden></span>
+          </div>
+
+          <div class="notice" id="notice" role="alert" hidden>
+            <p class="notice-title" id="notice-title"></p>
+            <div class="notice-body" id="notice-body"></div>
+          </div>
+
+          <details class="raw" id="raw" hidden>
+            <summary>API response</summary>
+            <pre id="raw-json"></pre>
+            <p class="raw-meta" id="raw-meta"></p>
+          </details>
+        </section>
+
+        <footer class="api-config">
+          <label for="api-url">API address</label>
+          <div class="api-row">
+            <input id="api-url" type="text" spellcheck="false" autocomplete="off">
+            <button type="button" id="api-check">Check connection</button>
+          </div>
+        </footer>
+
+      </div>
+    </aside>
+
+    <!-- ============ Right: form ============ -->
+    <main class="workspace">
+      <form id="churn-form">
+
+        <div class="examples">
+          <span>Not sure what to enter? Fill in an example:</span>
+          <button type="button" class="chip" data-example="risky">New month-to-month customer</button>
+          <button type="button" class="chip" data-example="loyal">Two-year loyal customer</button>
+        </div>
+
+        <section class="group" aria-labelledby="h-customer">
+          <h2 id="h-customer">Customer</h2>
+          <div class="fields" id="fields-customer"></div>
+        </section>
+
+        <section class="group" aria-labelledby="h-services">
+          <h2 id="h-services">Services</h2>
+          <div class="fields rows" id="fields-services"></div>
+        </section>
+
+        <section class="group" aria-labelledby="h-account">
+          <h2 id="h-account">Account and billing</h2>
+          <div class="fields" id="fields-account"></div>
+        </section>
+
+        <div class="actions">
+          <button type="submit" class="primary" id="submit">
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="submit-label">Predict churn</span>
+          </button>
+          <button type="button" class="ghost" id="reset">Reset form</button>
+        </div>
+
+      </form>
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
