@@ -48,7 +48,7 @@ Here is the comparative evaluation of various machine learning models trained fo
  'classifier__learning_rate': 0.01,
 'classifier__colsample_bytree': 0.8}
 
-*Then i got decent score :)
+* Then i got decent score :)
 
 
 ###  FastAPI & Pydantic workflow....
@@ -58,6 +58,6 @@ Genuinely speaking this is my first fastapi project and it takes everthing from 
 NGl i use claude ai to create FrontEnd and Backend , where in connection part to connect api to frontend i use FastAPI build_in class called FileResponse , basically it connect frontend to api thatsit.
 This processes take more time because i didn't know frontend ..
 
-###Real Talk....
+### Real Talk ...
 This is my first project before this i simply use streamlit , but in this project i use both fastapi , pydantic for val and front end, i know i use ai for most of the part but ngl i learns a lot from this project that how api works ,how to connect model to api and also how to connect api to frontend , and at last how to deploy application to render.... 
 
