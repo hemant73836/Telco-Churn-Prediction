@@ -1,11 +1,6 @@
 "use strict";
 
-/* =========================================================
-   Customer churn predictor — frontend logic
-   Talks to the FastAPI backend:  POST {API}/predict
-   ========================================================= */
 
-/* ---------- 1. Settings ---------- */
 
 const DEFAULT_API_BASE = "https://telco-churn-prediction-yba4.onrender.com";   // <-- your FastAPI address
 const STORAGE_KEY = "churn-api-base";
@@ -15,9 +10,7 @@ const REQUEST_TIMEOUT_MS = 15000;
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ---------- 2. Form definition ----------
-   Every field name below matches a field in the API's `Features` model.
-   Option `value`s are exactly what the API accepts. */
+
 
 const YES_NO = [
   { value: "Yes", label: "Yes" },
@@ -396,7 +389,7 @@ function showResult(data, elapsedMs) {
 
   rawJson.textContent = JSON.stringify(data, null, 2);
   rawMeta.textContent = `Responded in ${Math.round(elapsedMs)} ms`;
-  raw.hidden = false;
+  raw.hidden = true;
 }
 
 function showError(title, ...bodyNodes) {
