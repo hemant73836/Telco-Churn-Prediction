@@ -5,7 +5,7 @@ import numpy as np
 import joblib
 from typing import Literal
 from pydantic import BaseModel, Field, field_validator
-
+from fastapi.responses import FileResponse
 
 
 
@@ -69,4 +69,14 @@ def predict(features: Features):
     }
 
 
+@app.get("/")
+def serve_home():
+    return FileResponse("index.html")
 
+@app.get("/style.css")
+def serve_css():
+    return FileResponse("style.css")
+
+@app.get("/script.js")
+def serve_js():
+    return FileResponse("script.js")
