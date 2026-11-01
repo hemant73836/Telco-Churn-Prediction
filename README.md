@@ -54,9 +54,9 @@ This processes take more time because i didn't know frontend ..
 ### Real Talk ...
 This is my first project before this i simply use streamlit , but in this project i use both fastapi , pydantic for val and front end, i know i use ai for most of the part but ngl i learns a lot from this project that how api works ,how to connect model to api and also how to connect api to frontend , and at last how to deploy application to render.... 
 
-### Here Is All In Depth Details About This Project
+# Here Is All In Depth Details About This Project
 
-# What it does
+### What it does
 
 You enter a customer's profile, services and billing details. The model returns:
 
