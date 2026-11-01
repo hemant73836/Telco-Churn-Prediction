@@ -61,21 +61,26 @@ This processes take more time because i didn't know frontend ..
 ### Real Talk ...
 This is my first project before this i simply use streamlit , but in this project i use both fastapi , pydantic for val and front end, i know i use ai for most of the part but ngl i learns a lot from this project that how api works ,how to connect model to api and also how to connect api to frontend , and at last how to deploy application to render.... 
 
-### Here Is All In Depth Details About This Project
-What it does
+#### Here Is All In Depth Details About This Project
+
+## What it does
 
 You enter a customer's profile, services and billing details. The model returns:
 
-a yes/no prediction (will this customer churn?)
-the churn probability and the chance of staying
+- a **yes/no prediction** (will this customer churn?)
+- the **churn probability** and the **chance of staying**
 
 The frontend shows the result as a signal-strength meter. The more bars light up, the higher the churn risk, and a badge shows the risk level.
 
-Churn probability	Risk level
-below 25%	Low
-25% to 50%	Moderate
-50% and above	High
-How it works
+| Churn probability | Risk level |
+|---|---|
+| below 25% | Low |
+| 25% to 50% | Moderate |
+| 50% and above | High |
+
+## How it works
+
+```
 Browser (HTML, CSS, JavaScript)
         |
         |  POST /predict  (JSON)
@@ -85,57 +90,63 @@ FastAPI  ->  scikit-learn Pipeline (preprocessing + XGBoost classifier)
         |  { prediction, churn_probability, no_churn_probability }
         v
 Browser shows the result
-Features
+```
 
-Frontend
+## Features
 
-Form for all 19 model inputs, with sensible defaults
-Related options lock together automatically. Choosing "None" for internet service sets every internet add-on to "No internet service", and choosing "No" for phone service sets multiple lines to "No phone service"
-Total charges are calculated from tenure and monthly charges, or can be entered manually
-Two example customers (a new month-to-month customer and a two-year loyal customer) to try quickly
-Live API status, an editable API address, and clear messages for offline, timeout and validation errors
-Animated result meter, keyboard-friendly controls, reduced-motion support, and a layout that works on mobile
+**Frontend**
+- Form for all 19 model inputs, with sensible defaults
+- Related options lock together automatically. Choosing "None" for internet service sets every internet add-on to "No internet service", and choosing "No" for phone service sets multiple lines to "No phone service"
+- Total charges are calculated from tenure and monthly charges, or can be entered manually
+- Two example customers (a new month-to-month customer and a two-year loyal customer) to try quickly
+- Live API status, an editable API address, and clear messages for offline, timeout and validation errors
+- Animated result meter, keyboard-friendly controls, reduced-motion support, and a layout that works on mobile
 
-Backend
+**Backend**
+- Input validation with Pydantic (allowed values, tenure 0 to 72, charges of 0 or more)
+- CORS enabled so the browser frontend can call it
+- Interactive API docs at `/docs`
 
-Input validation with Pydantic (allowed values, tenure 0 to 72, charges of 0 or more)
-CORS enabled so the browser frontend can call it
-Interactive API docs at /docs
-Tech stack
-Part	Tools
-Model	scikit-learn Pipeline with XGBoost, saved with joblib
-Backend	Python, FastAPI, Uvicorn, Pydantic, pandas
-Frontend	HTML, CSS, JavaScript (no framework), Google Fonts
-Hosting	Render (API), static hosting for the frontend
-API reference
-POST /predict
+## Tech stack
+
+| Part | Tools |
+|---|---|
+| Model | scikit-learn Pipeline with XGBoost, saved with joblib |
+| Backend | Python, FastAPI, Uvicorn, Pydantic, pandas |
+| Frontend | HTML, CSS, JavaScript (no framework), Google Fonts |
+| Hosting | Render (API), static hosting for the frontend |
+
+## API reference
+
+### `POST /predict`
 
 Send all fields below as JSON.
 
-Field	Type	Allowed values
-gender	string	Female, Male
-SeniorCitizen	string	Yes, No
-Partner	string	Yes, No
-Dependents	string	Yes, No
-tenure	integer	0 to 72 (months)
-PhoneService	string	Yes, No
-MultipleLines	string	Yes, No, No phone service
-InternetService	string	DSL, Fiber optic, No
-OnlineSecurity	string	Yes, No, No internet service
-OnlineBackup	string	Yes, No, No internet service
-DeviceProtection	string	Yes, No, No internet service
-TechSupport	string	Yes, No, No internet service
-StreamingTV	string	Yes, No, No internet service
-StreamingMovies	string	Yes, No, No internet service
-Contract	string	Month-to-month, One year, Two year
-PaperlessBilling	string	Yes, No
-PaymentMethod	string	Electronic check, Mailed check, Bank transfer (automatic), Credit card (automatic)
-MonthlyCharges	number	0 or more
-TotalCharges	number	0 or more
+| Field | Type | Allowed values |
+|---|---|---|
+| `gender` | string | `Female`, `Male` |
+| `SeniorCitizen` | string | `Yes`, `No` |
+| `Partner` | string | `Yes`, `No` |
+| `Dependents` | string | `Yes`, `No` |
+| `tenure` | integer | 0 to 72 (months) |
+| `PhoneService` | string | `Yes`, `No` |
+| `MultipleLines` | string | `Yes`, `No`, `No phone service` |
+| `InternetService` | string | `DSL`, `Fiber optic`, `No` |
+| `OnlineSecurity` | string | `Yes`, `No`, `No internet service` |
+| `OnlineBackup` | string | `Yes`, `No`, `No internet service` |
+| `DeviceProtection` | string | `Yes`, `No`, `No internet service` |
+| `TechSupport` | string | `Yes`, `No`, `No internet service` |
+| `StreamingTV` | string | `Yes`, `No`, `No internet service` |
+| `StreamingMovies` | string | `Yes`, `No`, `No internet service` |
+| `Contract` | string | `Month-to-month`, `One year`, `Two year` |
+| `PaperlessBilling` | string | `Yes`, `No` |
+| `PaymentMethod` | string | `Electronic check`, `Mailed check`, `Bank transfer (automatic)`, `Credit card (automatic)` |
+| `MonthlyCharges` | number | 0 or more |
+| `TotalCharges` | number | 0 or more |
 
-Example request
+**Example request**
 
-bash
+```bash
 curl -X POST https://telco-churn-prediction-yba4.onrender.com/predict \
   -H "Content-Type: application/json" \
   -d '{
@@ -159,40 +170,46 @@ curl -X POST https://telco-churn-prediction-yba4.onrender.com/predict \
     "MonthlyCharges": 70.7,
     "TotalCharges": 141.4
   }'
+```
 
-Example response
+**Example response**
 
-json
+```json
 {
   "prediction": "Yes",
   "churn_probability": 0.8332,
   "no_churn_probability": 0.1668
 }
+```
 
-prediction is "Yes" when the model expects the customer to churn. If a value is missing or not allowed, the API returns 422 with details about the field.
+`prediction` is `"Yes"` when the model expects the customer to churn. If a value is missing or not allowed, the API returns `422` with details about the field.
 
-Run it locally
+## Run it locally
 
 You need Python 3 (tested on 3.13 and 3.14).
 
-1. Start the API
+**1. Start the API**
 
-bash
+```bash
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
+```
 
-Churn_model2.pkl must be in the same folder as main.py. Open http://127.0.0.1:8000/docs to test it.
+`Churn_model2.pkl` must be in the same folder as `main.py`. Open http://127.0.0.1:8000/docs to test it.
 
-2. Open the frontend
+**2. Open the frontend**
 
-Open index.html in your browser, or serve the folder:
+Open `index.html` in your browser, or serve the folder:
 
-bash
+```bash
 python -m http.server 5500
+```
 
-Then set the API address to http://127.0.0.1:8000, either in the API address box on the page or by changing DEFAULT_API_BASE at the top of script.js. The box saves its value in your browser, and a saved value takes priority over DEFAULT_API_BASE.
+Then set the API address to `http://127.0.0.1:8000`, either in the **API address** box on the page or by changing `DEFAULT_API_BASE` at the top of `script.js`. The box saves its value in your browser, and a saved value takes priority over `DEFAULT_API_BASE`.
 
-Project structure
+## Project structure
+
+```
 .
 ├── main.py              FastAPI app: validation, model loading, /predict
 ├── Churn_model2.pkl     Trained pipeline (preprocessing + XGBoost)
@@ -200,24 +217,34 @@ Project structure
 ├── index.html           Frontend page
 ├── style.css            Frontend styles
 └── script.js            Frontend logic and API connection
-Deployment
+```
 
-API on Render
+## Deployment
 
-Setting	Value
-Language	Python 3
-Build command	pip install -r requirements.txt
-Start command	uvicorn main:app --host 0.0.0.0 --port $PORT
-Environment variable	PYTHON_VERSION set to the version you develop with
+**API on Render**
 
-Frontend
+| Setting | Value |
+|---|---|
+| Language | Python 3 |
+| Build command | `pip install -r requirements.txt` |
+| Start command | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
+| Environment variable | `PYTHON_VERSION` set to the version you develop with |
 
-Set DEFAULT_API_BASE in script.js to the Render URL, then publish index.html, style.css and script.js on any static host (for example GitHub Pages).
+**Frontend**
 
-Troubleshooting
-ModuleNotFoundError: No module named 'pyarrow' (or xgboost) on startup. The saved model needs these packages to load. Make sure both are in requirements.txt.
-Warnings or odd results after changing library versions. The model file was saved with specific scikit-learn and XGBoost versions. Keep the deployed versions the same as the ones used for training, ideally pinned with ==.
-Frontend says "API offline". Check the API address, make sure the server is running, and give a sleeping free-tier server about a minute to wake up.
-Notes
-This is a learning project built on telecom customer churn data. The output is a statistical estimate, not a guarantee about any individual customer.
-Example inputs in the frontend are illustrative, not real customers.
+Set `DEFAULT_API_BASE` in `script.js` to the Render URL, then publish `index.html`, `style.css` and `script.js` on any static host (for example GitHub Pages).
+
+### Troubleshooting
+
+- **`ModuleNotFoundError: No module named 'pyarrow'` (or `xgboost`) on startup.** The saved model needs these packages to load. Make sure both are in `requirements.txt`.
+- **Warnings or odd results after changing library versions.** The model file was saved with specific scikit-learn and XGBoost versions. Keep the deployed versions the same as the ones used for training, ideally pinned with `==`.
+- **Frontend says "API offline".** Check the API address, make sure the server is running, and give a sleeping free-tier server about a minute to wake up.
+
+## Notes
+
+- This is a learning project built on telecom customer churn data. The output is a statistical estimate, not a guarantee about any individual customer.
+- Example inputs in the frontend are illustrative, not real customers.
+
+## Author
+
+Built by Hemant. GitHub: [hemant73836](https://github.com/hemant73836)
