@@ -5,13 +5,6 @@ This is a full stack Machine Learning Model(Application) that can predict whethe
 LIVE DEMO ----> https://telco-churn-prediction-yba4.onrender.com/
 
 
-##  Tech Stack & Architecture Stuff
-
-- **Backend:** Python, FastAPI, Uvicorn, Pydantic (for request validation)
-- **Machine Learning:** Scikit-learn (Pipeline & ColumnTransformer), XGBoost Classifier, Joblib (`Churn_model2.pkl`)
-- **Frontend:** HTML5, Modern CSS (Signal meter design, responsive grid), Vanilla JavaScript (`script.js`)
-- **Deployment:** Render Cloud Platform
-
 ## What i face during the production from Data Cleaning to deployment ??
 * So, i get dataset from kaggel (telco_churn_prediction) and then i do data preprocessing , EDA , Feature engineering etc.
 * Then i create multiple pipelines for each model , some model needs standard scaler and other doesn't so i create to different pipelines for each model and fit according to it.
